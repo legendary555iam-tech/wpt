@@ -1,0 +1,54 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Single-axis scroll containers with programmatic scroll APIs (clipped Y)</title>
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#dom-element-scrollto">
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#dom-element-scrollby">
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#dom-element-scrollwidth">
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#dom-element-scrollheight">
+<link rel="help" href="https://github.com/w3c/csswg-drafts/issues/5572">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+
+<style>
+  #scroller {
+    width: 100px;
+    height: 100px;
+    overflow-x: scroll;
+    overflow-y: clip;
+    scrollbar-width: none;
+  }
+  #content {
+    width: 300px;
+    height: 300px;
+  }
+</style>
+
+<div id="scroller">
+  <div id="content"></div>
+</div>
+
+<script>
+test(() => {
+  const scroller = document.getElementById('scroller');
+
+  // Test scrollTo
+  scroller.scrollTo(40, 50);
+  assert_equals(scroller.scrollLeft, 40, 'scrollTo updates the unclipped X-axis');
+  assert_equals(scroller.scrollTop, 0, 'scrollTo ignores the clipped Y-axis');
+
+  // Test scrollBy
+  scroller.scrollBy(20, 20);
+  assert_equals(scroller.scrollLeft, 60, 'scrollBy incrementally updates the unclipped X-axis (40 + 20 = 60)');
+  assert_equals(scroller.scrollTop, 0, 'scrollBy ignores the clipped Y-axis');
+
+  // Test scrollTop setter
+  scroller.scrollTop = 70;
+  assert_equals(scroller.scrollLeft, 60, 'setting scrollTop leaves the unclipped X-axis unchanged');
+  assert_equals(scroller.scrollTop, 0, 'setting scrollTop ignores the clipped Y-axis');
+
+  // Test dimensions
+  assert_equals(scroller.scrollWidth, 300, 'scrollWidth retains overflowing content size');
+  assert_equals(scroller.scrollHeight, 300, 'scrollHeight retains overflowing content size');
+
+}, 'Programmatic scroll APIs only update the unclipped axis and clamp dimensions with clipped Y-axis');
+</script>

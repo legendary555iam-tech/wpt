@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Single-axis scroll containers with programmatic scroll APIs (RTL, clipped X)</title>
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#dom-element-scrollto">
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#dom-element-scrollby">
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#dom-element-scrollwidth">
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#dom-element-scrollheight">
+<link rel="help" href="https://github.com/w3c/csswg-drafts/issues/5572">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+
+<style>
+  #scroller {
+    width: 100px;
+    height: 100px;
+    direction: rtl;
+    overflow-x: clip;
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+  #content {
+    width: 300px;
+    height: 300px;
+  }
+</style>
+
+<div id="scroller">
+  <div id="content"></div>
+</div>
+
+<script>
+test(() => {
+  const scroller = document.getElementById('scroller');
+
+  // Test scrollTo
+  scroller.scrollTo(-40, 50);
+  assert_equals(scroller.scrollLeft, 0, 'scrollTo ignores the clipped X-axis (negative in RTL)');
+  assert_equals(scroller.scrollTop, 50, 'scrollTo updates the unclipped Y-axis');
+
+  // Test scrollBy
+  scroller.scrollBy(-20, 20);
+  assert_equals(scroller.scrollLeft, 0, 'scrollBy ignores the clipped X-axis');
+  assert_equals(scroller.scrollTop, 70, 'scrollBy incrementally updates the unclipped Y-axis (50 + 20 = 70)');
+
+  // Test scrollLeft setter
+  scroller.scrollLeft = -70;
+  assert_equals(scroller.scrollLeft, 0, 'setting scrollLeft ignores the clipped X-axis');
+  assert_equals(scroller.scrollTop, 70, 'setting scrollLeft leaves the unclipped Y-axis unchanged');
+
+  // Test dimensions (unaffected by RTL)
+  assert_equals(scroller.scrollWidth, 300, 'scrollWidth retains overflowing content size');
+  assert_equals(scroller.scrollHeight, 300, 'scrollHeight retains overflowing content size');
+
+}, 'Programmatic scroll APIs only update the unclipped axis and clamp dimensions in RTL with clipped X-axis');
+</script>
