@@ -136,6 +136,37 @@ def test_verify_payload():
                 raise e
 
 
+def update_event_commit_args(event):
+    event["pull_request"]["body"] += "\ntest-args: --test1\ntest-args:--test2=value\nother-args:--other"
+
+
+@pytest.mark.parametrize("event_path,event_update,task,expected", [
+    ("pr_event.json", None, {"name": "test-task", "command": "test"},"""
+~/start.sh   https://github.com/web-platform-tests/wpt.git   fetch_ref;
+
+cd web-platform-tests;
+./wpt tc-run --ref=fetch_ref --no-hosts -- test ;
+"""),
+    ("pr_event.json",
+     update_event_commit_args,
+     {"name": "test-task", "command": "test", "commit-args-name": "test-args"},"""
+~/start.sh   https://github.com/web-platform-tests/wpt.git   fetch_ref;
+
+cd web-platform-tests;
+./wpt tc-run --ref=fetch_ref --no-hosts -- test --test1 --test2=value;
+""")
+])
+def test_command(event_path, event_update, task, expected):
+    with mock.patch("tools.ci.tc.decision.get_fetch_rev", return_value=("fetch_ref", None, None)):
+        with open(data_path(event_path), encoding="utf8") as event_file:
+            event = json.load(event_file)
+            if event_update is not None:
+                event_update(event)
+            command = decision.build_full_command(event, task)
+            full_expected = ['/bin/bash', '--login', '-xc', expected]
+            assert command == full_expected
+
+
 @pytest.mark.parametrize("event_path,is_pr,files_changed,expected", [
     ("master_push_event.json", False, None,
      ['download-firefox-nightly',
@@ -194,11 +225,11 @@ def test_verify_payload():
       'lint']),
     ("pr_event.json", True, {".taskcluster.yml", ".travis.yml", "tools/ci/start.sh"},
      ['lint',
-      'tools/ unittests (Python 3.8)',
+      'tools/ unittests (Python 3.9)',
       'tools/ unittests (Python 3.14)',
-      'tools/ integration tests (Python 3.8)',
+      'tools/ integration tests (Python 3.9)',
       'tools/ integration tests (Python 3.14)',
-      'resources/ tests (Python 3.8)',
+      'resources/ tests (Python 3.9)',
       'resources/ tests (Python 3.14)',
       'download-firefox-nightly',
       'infrastructure/ tests (firefox)',
@@ -218,7 +249,7 @@ def test_verify_payload():
       'sink-task']),
     ("pr_event_tests_affected.json", True, {"resources/testharness.js"},
      ['lint',
-      'resources/ tests (Python 3.8)',
+      'resources/ tests (Python 3.9)',
       'resources/ tests (Python 3.14)',
       'download-firefox-nightly',
       'infrastructure/ tests (firefox)',
