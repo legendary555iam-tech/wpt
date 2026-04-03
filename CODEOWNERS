@@ -1541,8 +1541,6 @@ webrtc/RTCConfiguration-iceCandidatePoolSize.html @web-platform-tests/interop
 webrtc/RTCConfiguration-iceServers.html @web-platform-tests/interop
 webrtc/RTCConfiguration-iceTransportPolicy.html @web-platform-tests/interop
 webrtc/RTCConfiguration-rtcpMuxPolicy.html @web-platform-tests/interop
-webrtc/RTCDTMFSender-ontonechange.https.html @web-platform-tests/interop
-webrtc/RTCDataChannel-GC.html @web-platform-tests/interop
 webrtc/RTCDataChannel-close.html @web-platform-tests/interop
 webrtc/RTCDataChannel-send-close-array-buffer-negotiated.window.js @web-platform-tests/interop
 webrtc/RTCDataChannel-send-close-array-buffer.window.js @web-platform-tests/interop
@@ -1553,12 +1551,10 @@ webrtc/RTCDataChannel-send-close-string.window.js @web-platform-tests/interop
 webrtc/RTCDataChannelInit-maxPacketLifeTime-enforce-range.html @web-platform-tests/interop
 webrtc/RTCDataChannelInit-maxRetransmits-enforce-range.html @web-platform-tests/interop
 webrtc/RTCDtlsTransport-getRemoteCertificates.html @web-platform-tests/interop
-webrtc/RTCDtlsTransport-state.html @web-platform-tests/interop
 webrtc/RTCError.html @web-platform-tests/interop
 webrtc/RTCIceTransport.html @web-platform-tests/interop
 webrtc/RTCPeerConnection-addIceCandidate.html @web-platform-tests/interop
 webrtc/RTCPeerConnection-addTransceiver.https.html @web-platform-tests/interop
-webrtc/RTCPeerConnection-constructor.html @web-platform-tests/interop
 webrtc/RTCPeerConnection-createDataChannel.html @web-platform-tests/interop
 webrtc/RTCPeerConnection-createOffer.html @web-platform-tests/interop
 webrtc/RTCPeerConnection-getStats.https.html @web-platform-tests/interop
@@ -1595,10 +1591,8 @@ webrtc/RTCRtpReceiver-getStats.https.html @web-platform-tests/interop
 webrtc/RTCRtpReceiver-getSynchronizationSources.https.html @web-platform-tests/interop
 webrtc/RTCRtpReceiver-jitterBufferTarget.html @web-platform-tests/interop
 webrtc/RTCRtpSender-getParameters.html @web-platform-tests/interop
-webrtc/RTCRtpSender-replaceTrack.https.html @web-platform-tests/interop
 webrtc/RTCRtpSender-setParameters.html @web-platform-tests/interop
 webrtc/RTCRtpTransceiver-setCodecPreferences.html @web-platform-tests/interop
-webrtc/RTCRtpTransceiver-stop.html @web-platform-tests/interop
 webrtc/RTCRtpTransceiver-stopping.https.html @web-platform-tests/interop
 webrtc/RTCRtpTransceiver.https.html @web-platform-tests/interop
 webrtc/RTCSctpTransport-events.html @web-platform-tests/interop
@@ -1622,13 +1616,11 @@ webrtc/protocol/rtp-headerextensions.html @web-platform-tests/interop
 webrtc/protocol/rtp-payloadtypes.html @web-platform-tests/interop
 webrtc/protocol/unknown-mediatypes.html @web-platform-tests/interop
 webrtc/protocol/video-codecs.https.html @web-platform-tests/interop
-webrtc/rtp-stats-lifetime.https.html @web-platform-tests/interop
 webrtc/simulcast/h264.https.html @web-platform-tests/interop
 webrtc/simulcast/negotiation-encodings.https.html @web-platform-tests/interop
 webrtc/simulcast/rid-manipulation.html @web-platform-tests/interop
 webrtc/simulcast/screenshare.https.html @web-platform-tests/interop
 webrtc/simulcast/vp9-scalability-mode.https.html @web-platform-tests/interop
-webrtc/toJSON.html @web-platform-tests/interop
 webrtc/transfer-datachannel.html @web-platform-tests/interop
 webrtc-encoded-transform/RTCRtpScriptTransform-bad-chunk.https.html @web-platform-tests/interop
 webrtc-encoded-transform/RTCRtpScriptTransform-encoded-transform.https.html @web-platform-tests/interop
